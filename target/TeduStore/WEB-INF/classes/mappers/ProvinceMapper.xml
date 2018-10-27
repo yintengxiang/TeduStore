@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace：匹配的接口 -->
+<mapper namespace="cn.tedu.store.mapper.ProvinceMapper">
+
+    <!--获取省的列表-->
+    <!-- List<Province> getProvinceList();-->
+    <select id="getProvinceList" resultType="cn.tedu.store.entity.Province">
+        select
+        id,province_code code ,province_name name
+        from
+        t_dict_provinces
+    </select>
+
+
+
+    <!--根据省的代号，获取省的信息-->
+    <!-- Province getProvinceByCode(String provinceCode);-->
+    <select id="getProvinceByCode" resultType="cn.tedu.store.entity.Province">
+        select
+         id,province_code code ,province_name name
+         from
+         t_dict_provinces
+         where province_code=#{provinceCode}
+    </select>
+
+</mapper>

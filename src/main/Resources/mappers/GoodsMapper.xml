@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.store.mapper.GoodsMapper">
+
+
+    <!--获取所有商品的数据-->
+    <!-- List<Goods> getGoodsList()-->
+    <select id="getGoodsList" resultType="cn.tedu.store.entity.Goods">
+        select
+        id,
+        category_id categoryId,
+        item_type itemType,
+        title,
+        sell_point sellPoint,
+        price,
+        num,
+        barcode,
+        image,
+        status,
+        priority,
+        created_time createdTime,
+        modified_time modifiedTime,
+        created_user createdUser,
+        modified_user modifiedUser
+        from
+        t_goods
+
+    </select>
+    <!--  List<Goods> getGoodsList(@Param("categoryId") Long categoryId, @Param("offset") Integer offset, @Param("countPerPage") Integer countPerPage);-->
+    <select id="getGoodsListByCategory" resultType="cn.tedu.store.entity.Goods">
+        select
+        id,
+        title,
+        price,
+        image
+        from
+        t_goods
+        where
+        category_id=#{categoryId}
+        order By
+        priority desc
+        limit #{offset},#{countPerPage}
+
+    </select>
+
+    <!--通过商品分类ID-categoryId查询商品数量-->
+    <!--Integer getGoodsCountByCategory(Long categoryId);-->
+    <select id="getGoodsCountByCategory" resultType="java.lang.Integer">
+        select
+          count(id)
+        from
+          t_goods
+        where
+          category_id=#{categoryId}
+    </select>
+
+    <!--根据商品id获取商品数据-->
+    <!--Goods getGoodsById(Integer id);-->
+    <select id="getGoodsById" resultType="cn.tedu.store.entity.Goods">
+        select
+           id,
+            category_id categoryId,
+            item_type itemType,
+            title,
+            sell_point sellPoint,
+            price,
+            num,
+            barcode,
+            image,
+            status,
+            priority
+        from
+          t_goods
+        where
+          id=#{id}
+    </select>
+
+    <!-- List<Goods> getGoodsListByItemType(String itemType);-->
+    <select id="getGoodsListByItemType" resultType="cn.tedu.store.entity.Goods">
+        select
+          id,title
+        from t_goods
+        where
+          item_type=#{itemType}
+           and num>0 and status=1
+          order By
+            priority desc
+    </select>
+</mapper>
